@@ -153,7 +153,7 @@ module.exports = function (server, config) {
     }
 
     function clientsInRoom(name) {
-        return io.sockets.clients(name).length;
+        //return io.sockets.clients(name).length;
         // MQ - FIX desde https://github.com/socketio/socket.io/issues/1450
         console.log('-----------------');
         console.log('clientsInRoom', 'room:', name);
