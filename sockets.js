@@ -58,6 +58,7 @@ module.exports = function (server, config) {
             // check if maximum number of clients reached
             if (config.rooms && config.rooms.maxClients > 0 &&
                 clientsInRoom(name) >= config.rooms.maxClients) {
+                console.log('=== room full =====');
                 safeCb(cb)('full');
                 return;
             }
@@ -141,8 +142,23 @@ module.exports = function (server, config) {
         return result;
     }
 
+    function roomCount(room){
+      var localCount = 0;
+      if (room) {
+        for (var id in room) {
+          localCount ++;
+        }
+      }
+      return localCount;
+    }
+
     function clientsInRoom(name) {
         return io.sockets.clients(name).length;
+        // MQ - FIX desde https://github.com/socketio/socket.io/issues/1450
+        console.log('-----------------');
+        console.log('clientsInRoom', 'room:', name);
+        console.log('clientsInRoom', roomCount(io.sockets.adapter.rooms[name]));
+        return roomCount(io.sockets.adapter.rooms[name]);
     }
 
 };
